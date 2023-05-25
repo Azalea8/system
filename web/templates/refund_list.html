@@ -1,0 +1,104 @@
+{% extends 'style.html' %}
+
+{% block content %}
+    <div class="container">
+        <div style="margin-bottom: 10px">
+            <a class="btn btn-success" href="/refund/add/">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                新建退货单</a>
+
+            <div style="float: right;width: 300px">
+                <form method="GET" action="">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="搜索退货单..."
+                               value="{{ search_data }}">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                退货单列表
+            </div>
+
+            <div class="panel-body">
+                <p>地狱火扣1即送</p>
+            </div>
+
+            <!-- Table -->
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>退货单编号</th>
+                    <th>物资名称</th>
+                    <th>退货数量</th>
+                    <th>内部退货人</th>
+                    <th>外部退货人</th>
+                    <th>质检人</th>
+                    <th>供应商</th>
+                    <th>备注</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in data_list %}
+                    <tr>
+                        <th scope="row">{{ obj.id }}</th>
+                        <td>{{ obj.name }}</td>
+                        <td>{{ obj.quantity }}</td>
+                        <td>{{ obj.return_in }}</td>
+                        <td>{{ obj.return_out }}</td>
+                        <td>{{ obj.quality }}</td>
+                        <td>{{ obj.vendor }}</td>
+                        <td>{{ obj.comment }}</td>
+                        <td>
+                            <a class="btn btn-primary btn-xs" href="/refund/{{ obj.id }}/edit/">编辑</a>
+                            <a class="btn btn-danger btn-xs" href="/refund/{{ obj.id }}/delete/">删除</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--页面跳转-->
+    <div class="container">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li>
+                    <a href="?q={{ search_data }}&page=1" aria-label="Previous">
+                        <span aria-hidden="true">首页</span>
+                    </a>
+                </li>
+                <!--
+                后端生成HTML文档
+                哈哈，前端的事后端做
+                -->
+                {{ page_string }}
+
+                <li>
+                    <form method="GET" action="" style="float: left;margin-left: 10px">
+                        <div class="input-group" style="width: 120px">
+                            <input type="text" name="page" class="form-control" placeholder="跳转" value="{{ page }}">
+                            <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
