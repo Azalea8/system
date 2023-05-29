@@ -3,18 +3,18 @@
 {% block content %}
     <div class="container">
         <div style="margin-bottom: 10px">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalAdd">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalPurchase">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                 进货
             </button>
-            <a class="btn btn-success" href="/outbound/add/">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalOutbound">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                 出货
-            </a>
-            <a class="btn btn-success" href="/refund/add/">
+            </button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalRefund">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                 退货
-            </a>
+            </button>
             <div style="float: right;width: 300px">
                 <form method="GET" action="">
                     <div class="input-group">
@@ -70,6 +70,9 @@
                         <td>
                             <a class="btn btn-primary btn-xs" href="/material/{{ obj.id }}/edit/">编辑</a>
                             <a class="btn btn-danger btn-xs" href="/material/{{ obj.id }}/delete/">删除</a>
+                            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal"
+                                    data-target="#ModalDelete">测试
+                            </button>
                         </td>
                     </tr>
                 {% endfor %}
@@ -110,7 +113,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="ModalPurchase" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -122,15 +125,14 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">进货</div>
                         <div class="panel-body">
-                            <form id="AddForm" novalidate>
+                            <form id="PurchaseForm" novalidate>
 
-                                {% for form in formset %}
-                                    <div class="col-xs-6">
+                                {% for form in formset_purchase %}
+                                    <div class="col-xs-12">
                                         <div class="form-group">
                                             <label>{{ form.label }}</label>
                                             {{ form }}
                                             <span class="error-msg" style="color: red"></span>
-                                            <!--<input type="text" class="form-control" placeholder="姓名" name="name">-->
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -141,27 +143,139 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
-                    <button id="btnAdd" type="button" class="btn btn-primary">提 交</button>
+                    <button id="btnPurchase" type="button" class="btn btn-primary">提 交</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="ModalRefund" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">退货单</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">退货</div>
+                        <div class="panel-body">
+                            <form id="RefundForm" novalidate>
+
+                                {% for form in formset_refund %}
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label>{{ form.label }}</label>
+                                            {{ form }}
+                                            <span class="error-msg" style="color: red"></span>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
+                    <button id="btnRefund" type="button" class="btn btn-primary">提 交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalOutbound" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">出货单</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">出货</div>
+                        <div class="panel-body">
+                            <form id="OutboundForm" novalidate>
+
+                                {% for form in formset_outbound %}
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label>{{ form.label }}</label>
+                                            {{ form }}
+                                            <span class="error-msg" style="color: red"></span>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
+                    <button id="btnOutbound" type="button" class="btn btn-primary">提 交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel" style="color: red;text-align:center">警告</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"></div>
+                        <div class="panel-body">
+                            <div class="col-xs-12">
+                                <form id="DeleteForm" novalidate>
+
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label>编号</label>
+                                            <input name="id" type="text" class="form-control" placeholder="再次输入该物资的编号"/>
+                                        </div>
+                                    </div>
+
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
+                    <button id="btnDelete" type="button" class="btn btn-danger">确认删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}
 
 {% block js %}
     <script type="text/javascript">
         $(function () {
-            bindBtnAddEvent();
+            btnPurchase();
+            btnRefund();
+            btnOutbound();
+            btnDelete();
         })
 
-        function bindBtnAddEvent() {
-            $('#btnAdd').click(function () {
+        function btnPurchase() {
+            $('#btnPurchase').click(function () {
                 $('.error-msg').empty();
 
                 $.ajax({
                     url: '/purchase/add/',
                     type: 'post',
-                    data: $('#AddForm').serialize(),
+                    data: $('#PurchaseForm').serialize(),
                     dataType: 'json',
                     success: function (res) {
                         if (res.status) {
@@ -169,7 +283,8 @@
                             location.reload();
                         } else {
                             $.each(res.errors, function (name, data) {
-                                $('#id_' + name).next().text(data[0]);
+                                id = '#id_' + name
+                                $('#PurchaseForm ' + id).next().text(data[0]);
                             })
                         }
                     }
@@ -177,13 +292,81 @@
             })
         }
 
+        function btnRefund() {
+            $('#btnRefund').click(function () {
+                $('.error-msg').empty();
+
+                $.ajax({
+                    url: '/refund/add/',
+                    type: 'post',
+                    data: $('#RefundForm').serialize(),
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.status) {
+                            alert('退货成功！');
+                            location.reload();
+                        } else {
+                            $.each(res.errors, function (name, data) {
+                                id = '#id_' + name
+                                $('#RefundForm ' + id).next().text(data[0]);
+                            })
+                        }
+                    }
+                })
+            })
+        }
+
+        function btnOutbound() {
+            $('#btnOutbound').click(function () {
+                $('.error-msg').empty();
+
+                $.ajax({
+                    url: '/outbound/add/',
+                    type: 'post',
+                    data: $('#OutboundForm').serialize(),
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.status) {
+                            alert('出货成功！');
+                            location.reload();
+                        } else {
+                            $.each(res.errors, function (name, data) {
+                                id = '#id_' + name
+                                $('#OutboundForm ' + id).next().text(data[0]);
+                            })
+                        }
+                    }
+                })
+            })
+        }
+
+        function btnDelete() {
+            $('#btnDelete').click(function () {
+
+                $.ajax({
+                    url: '/material/delete/',
+                    type: 'get',
+                    data: $('#DeleteForm').serialize(),
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.status) {
+                            alert('删除成功！');
+                            location.reload();
+                        }
+                    }
+                })
+            })
+        }
+
+
         $(function () {
-        $('#id_date').datepicker({
-            format: 'yyyy-mm-dd',
-            startData: '0',
-            language: 'zh-CN',
-            autoclose: true
-        });
-    })
+            $('input[name=date]').datepicker({
+                format: 'yyyy-mm-dd',
+                startData: '0',
+                language: 'zh-CN',
+                autoclose: true
+            });
+        })
+
     </script>
 {% endblock %}

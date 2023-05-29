@@ -5,36 +5,44 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 # Create your views here.
 
-
+@csrf_exempt
+# 免除csrf_tokens检测
 def vendor_add(request):
-    if request.method == 'GET':
-        formset = VendorModelForm()
-        return render(request, 'form.html', {'formset': formset})
+    # if request.method == 'GET':
+    #     formset = VendorModelForm()
+    #     return render(request, 'form.html', {'formset': formset})
 
     formset = VendorModelForm(data=request.POST)
     if formset.is_valid():
         formset.save()
-        return redirect('/vendor/list/')
+        data_dict = {'status': True, }
+        return HttpResponse(json.dumps(data_dict))
     else:
-        return render(request, 'form.html', {'formset': formset})
+        data_dict = {'status': False, 'errors': formset.errors}
+        return HttpResponse(json.dumps(data_dict))
 
+@csrf_exempt
+# 免除csrf_tokens检测
 def warehouse_add(request):
-    if request.method == 'GET':
-        formset = WarehouseModelForm()
-        return render(request, 'form.html', {'formset': formset})
+    # if request.method == 'GET':
+    #     formset = WarehouseModelForm()
+    #     return render(request, 'form.html', {'formset': formset})
 
     formset = WarehouseModelForm(data=request.POST)
     if formset.is_valid():
         formset.save()
-        return redirect('/warehouse/list/')
+        data_dict = {'status': True, }
+        return HttpResponse(json.dumps(data_dict))
     else:
-        return render(request, 'form.html', {'formset': formset})
+        data_dict = {'status': False, 'errors': formset.errors}
+        return HttpResponse(json.dumps(data_dict))
 
-@csrf_exempt # 免除csrf_tokens检测
+@csrf_exempt
+# 免除csrf_tokens检测
 def purchase_add(request):
-    if request.method == 'GET':
-        formset = PurchaseModelForm()
-        return render(request, 'form.html', {'formset': formset, 'title': '进货单'})
+    # if request.method == 'GET':
+    #     formset = PurchaseModelForm()
+    #     return render(request, 'form.html', {'formset': formset, 'title': '进货单'})
 
     formset  = PurchaseModelForm(data=request.POST)
     if formset.is_valid():
@@ -59,10 +67,12 @@ def purchase_add(request):
         data_dict = {'status': False, 'errors': formset.errors}
         return HttpResponse(json.dumps(data_dict))
 
+@csrf_exempt
+# 免除csrf_tokens检测
 def refund_add(request):
-    if request.method == 'GET':
-        formset = RefundModelForm()
-        return render(request, 'form.html', {'formset': formset, 'title': '退货单'})
+    # if request.method == 'GET':
+    #     formset = RefundModelForm()
+    #     return render(request, 'form.html', {'formset': formset, 'title': '退货单'})
 
     formset = RefundModelForm(data=request.POST)
     if formset.is_valid():
@@ -72,7 +82,8 @@ def refund_add(request):
         tmp = Material.objects.filter(id=nid).first().quantity - tmp
         if tmp < 0:
             formset.add_error('quantity', '再退货就为负了>-<')
-            return render(request, 'form.html', {'formset': formset, 'title': '退货单'})
+            data_dict = {'status': False, 'errors': formset.errors}
+            return HttpResponse(json.dumps(data_dict))
 
         Material.objects.filter(id=nid).update(quantity=tmp)
         formset.save()
@@ -82,14 +93,19 @@ def refund_add(request):
         nid = Refund.objects.last().id
         Refund.objects.filter(id=nid).update(name=name, vendor=vendor)
 
-        return redirect('/material/list/')
+        data_dict = {'status': True, }
+        return HttpResponse(json.dumps(data_dict))
     else:
-        return render(request, 'form.html', {'formset': formset, 'title': '退货单'})
+        data_dict = {'status': False, 'errors': formset.errors}
+        return HttpResponse(json.dumps(data_dict))
 
+# 免除csrf_tokens检测
+@csrf_exempt
+# 免除csrf_tokens检测
 def outbound_add(request):
-    if request.method == 'GET':
-        formset = OutboundModelForm()
-        return render(request, 'form.html', {'formset': formset, 'title': '出库单'})
+    # if request.method == 'GET':
+    #     formset = OutboundModelForm()
+    #     return render(request, 'form.html', {'formset': formset, 'title': '出库单'})
 
     formset = OutboundModelForm(data=request.POST)
     if formset.is_valid():
@@ -99,7 +115,8 @@ def outbound_add(request):
         tmp = Material.objects.filter(id=nid).first().quantity - tmp
         if tmp < 0:
             formset.add_error('outbound_quantity', '再出库就为负了>-<')
-            return render(request, 'form.html', {'formset': formset, 'title': '出库单'})
+            data_dict = {'status': False, 'errors': formset.errors}
+            return HttpResponse(json.dumps(data_dict))
 
         Material.objects.filter(id=nid).update(quantity=tmp)
         formset.save()
@@ -107,6 +124,8 @@ def outbound_add(request):
         nid = Outbound.objects.last().id
         Outbound.objects.filter(id=nid).update(name=name)
 
-        return redirect('/material/list/')
+        data_dict = {'status': True,}
+        return HttpResponse(json.dumps(data_dict))
     else:
-        return render(request, 'form.html', {'formset': formset, 'title': '出库单'})
+        data_dict = {'status': False, 'errors': formset.errors}
+        return HttpResponse(json.dumps(data_dict))

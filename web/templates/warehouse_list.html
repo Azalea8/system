@@ -3,9 +3,10 @@
 {% block content %}
     <div class="container">
         <div style="margin-bottom: 10px">
-            <a class="btn btn-success" href="/warehouse/add/">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalWarehouse">
                 <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                新建仓库</a>
+                新建仓库
+            </button>
 
             <div style="float: right;width: 300px">
                 <form method="GET" action="">
@@ -91,4 +92,72 @@
             </ul>
         </nav>
     </div>
+
+    <div class="modal fade" id="ModalWarehouse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">仓库</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">新建仓库</div>
+                        <div class="panel-body">
+                            <form id="WarehouseForm" novalidate>
+
+                                {% for form in formset_warehouse %}
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <label>{{ form.label }}</label>
+                                            {{ form }}
+                                            <span class="error-msg" style="color: red"></span>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关 闭</button>
+                    <button id="btnWarehouse" type="button" class="btn btn-primary">提 交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $(function () {
+            btnWarehouse();
+        })
+
+        function btnWarehouse() {
+            $('#btnWarehouse').click(function () {
+                $('.error-msg').empty();
+
+                $.ajax({
+                    url: '/warehouse/add/',
+                    type: 'post',
+                    data: $('#WarehouseForm').serialize(),
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.status) {
+                            alert('添加成功！');
+                            location.reload();
+                        } else {
+                            $.each(res.errors, function (name, data) {
+                                id = '#id_' + name
+                                $('#WarehouseForm '+ id).next().text(data[0]);
+                            })
+                        }
+                    }
+                })
+            })
+        }
+    </script>
 {% endblock %}

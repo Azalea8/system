@@ -27,7 +27,7 @@ urlpatterns = [
     path('vendor/<int:nid>/edit/', edit.vendor_edit),
     path('warehouse/<int:nid>/edit/', edit.warehouse_edit),
 
-    path('material/<int:nid>/delete/', delete.material_delete),
+    path('material/delete/', delete.material_delete),
     path('purchase/<int:nid>/delete/', delete.purchase_delete),
     path('outbound/<int:nid>/delete/', delete.outbound_delete),
     path('vendor/<int:nid>/delete/', delete.vendor_delete),

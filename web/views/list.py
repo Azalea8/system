@@ -8,7 +8,9 @@ from system.utils.plugins import Pagination, md5
 # Create your views here.
 
 def material_list(request):
-    formset = PurchaseModelForm()
+    formset_purchase = PurchaseModelForm()
+    formset_refund = RefundModelForm()
+    formset_outbound = OutboundModelForm()
     data_dict = {}
     search_data = request.GET.get('q', '')
     if search_data:
@@ -20,13 +22,17 @@ def material_list(request):
     context = {
         'data_list': page_object.data_list,
         'search_data': search_data,
-        'formset': formset,
+        'formset_purchase': formset_purchase,
+        'formset_refund': formset_refund,
+        'formset_outbound': formset_outbound,
         'page_string': page_object.html(),
     }
 
     return render(request, 'material_list.html', context)
 
 def vendor_list(request):
+
+    formset_vendor = VendorModelForm()
     data_dict = {}
     search_data = request.GET.get('q', '')
     if search_data:
@@ -38,15 +44,15 @@ def vendor_list(request):
     context = {
         'data_list': page_object.data_list,
         'search_data': search_data,
-
-        'page_string': page_object.html()
+        'formset_vendor': formset_vendor,
+        'page_string': page_object.html(),
     }
 
     return render(request, 'vendor_list.html', context)
 
 
 def warehouse_list(request):
-
+    formset_warehouse = WarehouseModelForm()
     data_dict = {}
     search_data = request.GET.get('q', '')
     if search_data:
@@ -58,8 +64,8 @@ def warehouse_list(request):
     context = {
         'data_list': page_object.data_list,
         'search_data': search_data,
-
-        'page_string': page_object.html()
+        'formset_warehouse': formset_warehouse,
+        'page_string': page_object.html(),
     }
 
     return render(request, 'warehouse_list.html', context)
