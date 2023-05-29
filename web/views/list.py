@@ -1,11 +1,14 @@
 from django.shortcuts import render, HttpResponse, redirect
 from web.models import *
+from web.modelform import *
 from django import forms
 from system.utils.plugins import Pagination, md5
+
 
 # Create your views here.
 
 def material_list(request):
+    formset = PurchaseModelForm()
     data_dict = {}
     search_data = request.GET.get('q', '')
     if search_data:
@@ -17,7 +20,7 @@ def material_list(request):
     context = {
         'data_list': page_object.data_list,
         'search_data': search_data,
-
+        'formset': formset,
         'page_string': page_object.html(),
     }
 

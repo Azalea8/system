@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponse, redirect
 from system.utils.plugins import Pagination, md5
 from web.modelform import *
+from django.views.decorators.csrf import csrf_exempt
+import json
 # Create your views here.
 
 
@@ -28,6 +30,7 @@ def warehouse_add(request):
     else:
         return render(request, 'form.html', {'formset': formset})
 
+@csrf_exempt # 免除csrf_tokens检测
 def purchase_add(request):
     if request.method == 'GET':
         formset = PurchaseModelForm()
@@ -50,9 +53,11 @@ def purchase_add(request):
             material_data['quantity'] = data.get('quantity')
             Material.objects.create(**material_data)
         formset.save()
-        return redirect('/material/list/')
+        data_dict = {'status': True, }
+        return HttpResponse(json.dumps(data_dict))
     else:
-        return render(request, 'form.html', {'formset': formset})
+        data_dict = {'status': False, 'errors': formset.errors}
+        return HttpResponse(json.dumps(data_dict))
 
 def refund_add(request):
     if request.method == 'GET':
