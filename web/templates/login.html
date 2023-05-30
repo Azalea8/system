@@ -49,12 +49,19 @@
                     <span style="color: red">{{ formset.code_str.errors.0 }}</span>
                 </div>
                 <div class="col-xs-5">
-                    <img id="img_code" src="/image/code/" style="width: 125px">
+                    <img id="img_code" src="/image/code/" style="width: 125px" alt=""/>
                 </div>
             </div>
         </div>
         <input type="submit" value="登 录" class="btn btn-primary">
     </form>
 </div>
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script type="text/javascript">
+    $('#img_code').click(function () {
+        let src = '/image/code/?t=' + Math.random(); // 不开随机数，浏览器会缓存，图片不会更新
+        $(this).attr('src', src);
+    })
+</script>
 </body>
 </html>

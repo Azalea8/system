@@ -13,7 +13,7 @@ class LoginForm(forms.Form):
     )
     password = forms.CharField(
         label='密码',
-        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': '这里填写密码喵~'})
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': '这里填写密码喵~'}, render_value=True)
     )
     code_str = forms.CharField(
         label='图片验证码',
@@ -32,7 +32,9 @@ def login(request):
     formset = LoginForm(data=request.POST)
     if formset.is_valid():
         user_code_input = formset.cleaned_data.pop('code_str')
-        if user_code_input.upper() != request.session.get('image_code', '').upper():
+        image_code = request.session.pop('image_code')
+        # print(request.session.get('image_code', '没有呢'))
+        if user_code_input.upper() != image_code.upper():
             formset.add_error('code_str', '错误（先校验验证码）')
             return render(request, 'login.html', {'formset': formset})
 
