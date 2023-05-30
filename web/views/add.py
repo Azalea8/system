@@ -89,7 +89,6 @@ def refund_add(request):
         formset.save()
         name = data.get('material').name
         vendor = data.get('material').vendor.name
-        print(name, vendor)
         nid = Refund.objects.last().id
         Refund.objects.filter(id=nid).update(name=name, vendor=vendor)
 

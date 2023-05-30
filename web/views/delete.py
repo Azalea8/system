@@ -13,7 +13,7 @@ def warehouse_delete(request, nid):
     return redirect('/warehouse/list')
 
 def material_delete(request):
-    nid = request.GET.get('id')
+    nid = request.GET.get('nid')
     Material.objects.filter(id=nid).delete()
     data_dict = {'status': True, }
     return HttpResponse(json.dumps(data_dict))
