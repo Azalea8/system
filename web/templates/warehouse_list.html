@@ -107,15 +107,17 @@
                         <div class="panel-body">
                             <form id="WarehouseForm" novalidate>
 
-                                {% for form in formset_warehouse %}
-                                    <div class="col-xs-12">
-                                        <div class="form-group">
-                                            <label>{{ form.label }}</label>
-                                            {{ form }}
-                                            <span class="error-msg" style="color: red"></span>
+                                <div class="clearfix">
+                                    {% for form in formset_warehouse %}
+                                        <div class="col-xs-6">
+                                            <div class="form-group" style="position: relative;margin-top: 20px">
+                                                <label>{{ form.label }}</label>
+                                                {{ form }}
+                                                <span class="error-msg" style="color: red;position: absolute"></span>
+                                            </div>
                                         </div>
-                                    </div>
-                                {% endfor %}
+                                    {% endfor %}
+                                </div>
 
                             </form>
                         </div>

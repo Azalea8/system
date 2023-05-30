@@ -127,15 +127,17 @@
                         <div class="panel-body">
                             <form id="PurchaseForm" novalidate>
 
-                                {% for form in formset_purchase %}
-                                    <div class="col-xs-12">
-                                        <div class="form-group">
-                                            <label>{{ form.label }}</label>
-                                            {{ form }}
-                                            <span class="error-msg" style="color: red"></span>
+                                <div class="clearfix">
+                                    {% for form in formset_purchase %}
+                                        <div class="col-xs-6">
+                                            <div class="form-group" style="position: relative;margin-top: 20px">
+                                                <label>{{ form.label }}</label>
+                                                {{ form }}
+                                                <span class="error-msg" style="color: red;position: absolute"></span>
+                                            </div>
                                         </div>
-                                    </div>
-                                {% endfor %}
+                                    {% endfor %}
+                                </div>
 
                             </form>
                         </div>
@@ -163,15 +165,17 @@
                         <div class="panel-body">
                             <form id="RefundForm" novalidate>
 
-                                {% for form in formset_refund %}
-                                    <div class="col-xs-12">
-                                        <div class="form-group">
-                                            <label>{{ form.label }}</label>
-                                            {{ form }}
-                                            <span class="error-msg" style="color: red"></span>
+                                <div class="clearfix">
+                                    {% for form in formset_refund %}
+                                        <div class="col-xs-6">
+                                            <div class="form-group" style="position: relative;margin-top: 20px">
+                                                <label>{{ form.label }}</label>
+                                                {{ form }}
+                                                <span class="error-msg" style="color: red;position: absolute"></span>
+                                            </div>
                                         </div>
-                                    </div>
-                                {% endfor %}
+                                    {% endfor %}
+                                </div>
 
                             </form>
                         </div>
@@ -199,15 +203,17 @@
                         <div class="panel-body">
                             <form id="OutboundForm" novalidate>
 
-                                {% for form in formset_outbound %}
-                                    <div class="col-xs-12">
-                                        <div class="form-group">
-                                            <label>{{ form.label }}</label>
-                                            {{ form }}
-                                            <span class="error-msg" style="color: red"></span>
+                                <div class="clearfix">
+                                    {% for form in formset_outbound %}
+                                        <div class="col-xs-6">
+                                            <div class="form-group" style="position: relative;margin-top: 20px">
+                                                <label>{{ form.label }}</label>
+                                                {{ form }}
+                                                <span class="error-msg" style="color: red;position: absolute"></span>
+                                            </div>
                                         </div>
-                                    </div>
-                                {% endfor %}
+                                    {% endfor %}
+                                </div>
 
                             </form>
                         </div>
@@ -239,11 +245,12 @@
                                     <div class="col-xs-12">
                                         <div class="form-group">
                                             <label>编号</label>
-                                            <input name="id" type="text" class="form-control" placeholder="再次输入该物资的编号"/>
+                                            <input name="id" type="text" class="form-control"
+                                                   placeholder="再次输入该物资的编号"/>
                                         </div>
                                     </div>
 
-                            </form>
+                                </form>
                             </div>
                         </div>
                     </div>
