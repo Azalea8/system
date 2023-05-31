@@ -28,8 +28,8 @@ urlpatterns = [
     path('warehouse/<int:nid>/edit/', edit.warehouse_edit),
 
     path('material/delete/', delete.material_delete),
-    path('purchase/<int:nid>/delete/', delete.purchase_delete),
-    path('outbound/<int:nid>/delete/', delete.outbound_delete),
-    path('vendor/<int:nid>/delete/', delete.vendor_delete),
-    path('warehouse/<int:nid>/delete/', delete.warehouse_delete),
+    path('purchase/delete/', delete.purchase_delete),
+    path('outbound/delete/', delete.outbound_delete),
+    path('vendor/delete/', delete.vendor_delete),
+    path('warehouse/delete/', delete.warehouse_delete),
 ]

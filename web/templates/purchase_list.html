@@ -66,7 +66,7 @@
                         <td>{{ obj.comment }}</td>
                         <td>
                             <a class="btn btn-primary btn-xs" href="/purchase/{{ obj.id }}/edit/">编辑</a>
-                            <a class="btn btn-danger btn-xs" href="/purchase/{{ obj.id }}/delete/">删除</a>
+                            <button nid="{{ obj.id }}" type="button" class="btn btn-danger btn-xs btn-delete">删除</button>
                         </td>
                     </tr>
                 {% endfor %}
@@ -105,4 +105,55 @@
             </ul>
         </nav>
     </div>
+
+    <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <h4 style="text-align: center">警告</h4>
+                <p>删除后无法恢复，谨慎删除</p>
+                <p style="margin-top: 10px;text-align: right">
+                    <button id="btnDelete" type="button" class="btn btn-danger">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        let nid;
+
+        $(function () {
+
+            Get_nid();
+            btnDelete();
+        })
+
+        function Get_nid() {
+            $('.btn-delete').click(function () {
+                $('#DeleteModal').modal('show');
+
+                nid = $(this).attr('nid')
+            })
+        }
+
+        function btnDelete() {
+            $('#btnDelete').click(function () {
+
+                $.ajax({
+                    url: '/purchase/delete/',
+                    type: 'get',
+                    data: {'nid': nid},
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.status) {
+                            alert('删除成功！');
+                            location.reload();
+                        }
+                    }
+                })
+            })
+        }
+    </script>
 {% endblock %}
