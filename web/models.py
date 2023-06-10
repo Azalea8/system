@@ -15,7 +15,6 @@ class Material(models.Model):
     category_choices = (
         (1, '读卡机'), (2, 'POS机'), (3, '热敏打印机'),
         (4, '打印纸'), (5, '敬老卡'), (6, '市民卡'),
-        (7, '王者荣耀皮肤'),
     )
     category = models.SmallIntegerField(verbose_name='物资类别', choices=category_choices)
 
@@ -54,7 +53,6 @@ class Purchase(models.Model):
     category_choices = (
         (1, '读卡机'), (2, 'POS机'), (3, '热敏打印机'),
         (4, '打印纸'), (5, '敬老卡'), (6, '市民卡'),
-        (7, '王者荣耀皮肤'),
     )
     category = models.SmallIntegerField(verbose_name='物资类别', choices=category_choices)
 
