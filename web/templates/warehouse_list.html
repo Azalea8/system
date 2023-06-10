@@ -167,8 +167,8 @@
                     success: function (res) {
                         if (res.status) {
                             alert('新的仓库已生成')
-                            $('#PurchaseForm')[0].reset(); //$('#AddForm')是jQuery对象， $('#AddForm')[0]是DOM对象
-                            $('#ModalPurchase').modal('hide');
+                            $('#WarehouseForm')[0].reset(); //$('#AddForm')是jQuery对象， $('#AddForm')[0]是DOM对象
+                            $('#ModalWarehouse').modal('hide');
                             location.reload(); // 刷新页面
                         } else {
                             $.each(res.errors, function (name, data) {
