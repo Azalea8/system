@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from web.views import account, list, add, edit, delete
+from web.views import account, list, add, edit, delete, material
 
 urlpatterns = [
     path('', account.homepage),
@@ -32,4 +32,7 @@ urlpatterns = [
     path('outbound/delete/', delete.outbound_delete),
     path('vendor/delete/', delete.vendor_delete),
     path('warehouse/delete/', delete.warehouse_delete),
+
+    path('api/material/', material.MaterialListView.as_view()),
+    path('api/material/<int:pk>/', material.MaterialDetailView.as_view()),
 ]
