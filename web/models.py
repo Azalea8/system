@@ -80,7 +80,7 @@ class Outbound(models.Model):
                                  on_delete=models.SET_NULL)
     name = models.CharField(verbose_name='物资名称', max_length=32)
     date = models.DateField(verbose_name='出库日期')
-    outbound_quantity = models.IntegerField(verbose_name='出库数量')
+    quantity = models.IntegerField(verbose_name='出库数量')
 
     comment = models.CharField(verbose_name='备注', max_length=64)
 
