@@ -28,7 +28,7 @@ class Pagination(object):
 
         if data_all_list.count() % page_size != 0:
             self.page_max = data_all_list.count() // page_size + 1
-        else: self.page_max = data_all_list.count() / page_size
+        else: self.page_max = data_all_list.count() // page_size
 
         self.page_list = [self.page + i for i in range(-plus, plus+1)]
         self.page = max(1, self.page)
