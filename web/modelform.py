@@ -60,7 +60,7 @@ class OutboundModelForm(Bootstrap_model_form):
 
     class Meta:
         model = Outbound
-        fields = ['material', 'outbound_quantity', 'date', 'comment']
+        fields = ['material', 'quantity', 'date', 'comment']
         widgets={
 
         }
