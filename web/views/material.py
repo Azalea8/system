@@ -60,7 +60,7 @@ class MaterialDetailView(View):
         try:
             material = Material.objects.filter(id=pk).get()
         except Material.DoesNotExist:
-            return HttpResponse({'message': '查询的数据不存在'}, status=404)
+            return JsonResponse({'message': '查询的数据不存在'}, status=404)
         material_dict = {
             'id': material.id,
             'name': material.name,
@@ -77,7 +77,7 @@ class MaterialDetailView(View):
         try:
             material = Material.objects.filter(id=pk).get()
         except Material.DoesNotExist:
-            return HttpResponse({'message': '查询的数据不存在'}, status=404)
+            return JsonResponse({'message': '查询的数据不存在'}, status=404)
 
         json_str_bytes = request.body
         json_str = json_str_bytes.decode()
@@ -107,6 +107,6 @@ class MaterialDetailView(View):
         try:
             material = Material.objects.filter(id=pk).get()
         except Material.DoesNotExist:
-            return HttpResponse({'message': '查询的数据不存在'}, status=404)
+            return JsonResponse({'message': '查询的数据不存在'}, status=404)
         material.delete()
         return HttpResponse(status=204)
