@@ -109,7 +109,6 @@ def outbound_add(request):
     formset = OutboundModelForm(data=request.POST)
     if formset.is_valid():
         data = formset.cleaned_data
-        print(data)
         tmp = data.get('quantity')
         nid = data.get('material').id
         tmp = Material.objects.filter(id=nid).first().quantity - tmp
